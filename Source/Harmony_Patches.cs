@@ -82,4 +82,48 @@ namespace WorkAreaPriorityManager
 			}
 		}
 	}
+
+	[HarmonyPatch(typeof(Verse.AreaUtility))]
+    [HarmonyPatch("MakeAllowedAreaListFloatMenu")]
+    static class AreaUtility_MakeAllowedAreaListFloatMenu
+    {
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            MethodInfo getWindowStack = AccessTools.Method(typeof(Verse.Find), "get_WindowStack");
+            MethodInfo listAddHelper = AccessTools.Method(typeof(AreaUtility_MakeAllowedAreaListFloatMenu), "ListAddHelper");
+
+            List<CodeInstruction> codes = instructions.ToList();
+            for (int i = 0; i < codes.Count; i++) {
+                if (codes[i].opcode == OpCodes.Call && codes[i].operand == getWindowStack) {
+                    yield return new CodeInstruction(OpCodes.Ldarg_S, 4);   //Map on stack
+                    yield return new CodeInstruction(OpCodes.Ldloc_1);  //Leave List<FloatMenuOption>, Map on stack
+                    yield return new CodeInstruction(OpCodes.Call, listAddHelper);  //Consume 1
+                }
+                yield return codes[i];
+            }
+        }
+
+        static void ListAddHelper(Map map, List<FloatMenuOption> list)
+        {
+            list.Add(new FloatMenuOption("ManageWorkAreaPriorities".Translate(),
+                () => map.GetComponent<AreaPriorityManager>().LaunchDialog_ManageWorkAreaPriorities(),
+                MenuOptionPriority.Low, null, null, 0, null, null));
+        }
+    }
+
+	[HarmonyPatch(typeof(RimWorld.MainTabWindow_Work))]
+	[HarmonyPatch("DoManualPrioritiesCheckbox")]
+	static class MainTabWindow_Work__DoManualPrioritiesCheckbox_Patches
+	{
+		static void Postfix(MainTabWindow_Work __instance)
+		{
+			Text.Font = GameFont.Small;
+			GUI.color = Color.white;
+			Text.Anchor = TextAnchor.UpperLeft;
+			Rect rect = new Rect(5f, 40f, 140f, 30f);
+			if (Widgets.ButtonText(rect, "WorkAreaPriorities".Translate()))
+				Find.VisibleMap?.GetComponent<AreaPriorityManager>().LaunchDialog_ManageWorkAreaPriorities();
+		}
+	}
 }
+               
