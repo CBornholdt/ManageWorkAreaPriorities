@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 using RimWorld;
 
@@ -30,6 +31,10 @@ namespace WorkAreaPriorityManager
 		{
 			Scribe_Collections.Look<WorkGiverDef, WorkAreaPrioritization> (ref this.prioritizations, "Prioritizations", 
 				LookMode.Def, LookMode.Deep, ref this.exposeHelper1, ref this.exposeHelper2);
+
+			if (Scribe.mode == LoadSaveMode.PostLoadInit)   //If a mod was loaded that adds new work givers ...
+				foreach (var newWorkGiver in DefDatabase<WorkGiverDef>.AllDefsListForReading.Except(this.prioritizations.Keys))
+					this.prioritizations.Add(newWorkGiver, null);
 		}
 
 		public void LaunchDialog_ManageWorkAreaPriorities()

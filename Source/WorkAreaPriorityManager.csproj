@@ -8,6 +8,7 @@
     <RootNamespace>WorkAreaPriorityManager</RootNamespace>
     <AssemblyName>WorkAreaPriorityManager</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ReleaseVersion>0.2</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,7 +40,6 @@
     </Reference>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\..\..\..\..\..\..\..\usr\local\lib\dotnet\0Harmony.dll</HintPath>
-      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
