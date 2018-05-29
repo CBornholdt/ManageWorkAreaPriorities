@@ -1,0 +1,4 @@
+*.userprefs
+*UserPrefs*
+Source/obj
+Source/bin

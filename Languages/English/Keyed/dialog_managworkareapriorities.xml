@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+	<ManageWorkAreaPriorities>Manage Work Area Priorities</ManageWorkAreaPriorities>
+	<Disable>Disable</Disable>
+	<HighPriority>High Priority</HighPriority>
+	<LowPriority>Low Priority</LowPriority>
+	<AvoidPriority>Avoid Priority</AvoidPriority>
+	<Inverted>Inverted</Inverted>
+	<NotInverted>NotInverted</NotInverted>
+	<Prioritize>Prioritize</Prioritize>
+	<NewWorkAreaPrioritization>New Prioritization</NewWorkAreaPrioritization>
+	<RemoveWorkAreaPrioritization>Remove Prioritization</RemoveWorkAreaPrioritization>
+</LanguageData>
