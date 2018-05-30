@@ -42,8 +42,11 @@ namespace WorkAreaPriorityManager
 
 		static WorkGiver_Scanner Helper(WorkGiver_Scanner scanner, Pawn pawn)
 		{
-			if (scanner == null || 
-				(pawn.Map.GetComponent<AreaPriorityManager> ().Prioritizations [scanner.def]?.disabled ?? true) == true)
+			var aPM = pawn.Map.GetComponent<AreaPriorityManager>();
+			if (scanner == null)
+				return scanner;
+			if (!aPM.Prioritizations.ContainsKey(scanner.def) 
+				|| (aPM.Prioritizations [scanner.def]?.disabled ?? true) == true)
 				return scanner;
 			return new WorkGiver_Scanner_AreaPriorityWrapper (scanner, pawn.Map);
 		}
