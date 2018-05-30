@@ -130,7 +130,7 @@ namespace WorkAreaPriorityManager
 			Action<WorkTypeDef> createWorkCategorySubMenu = (WorkTypeDef workType) => {
 				List<FloatMenuOption> subMenuList = new List<FloatMenuOption> ();
 				foreach (var giver in DefDatabase<WorkGiverDef>.AllDefsListForReading.Where(def => def.workType == workType))
-					if (wAPM.Prioritizations [giver] == null)
+					if (wAPM.Prioritizations.ContainsKey(giver) && wAPM.Prioritizations [giver] == null)
 						subMenuList.Add (new FloatMenuOption ("Prioritize".Translate () + ": " + giver.gerund.CapitalizeFirst()
 							, () => wAPM.Prioritizations [giver] = new WorkAreaPrioritization ()));
 				Find.WindowStack.Add (new FloatMenu (subMenuList));
